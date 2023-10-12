@@ -7,7 +7,7 @@ OBJSIZE	= arm-none-eabi-size
 OBJDUMP	= arm-none-eabi-objdump
 OBJCOPY	= arm-none-eabi-objcopy
 CPU		= -mcpu=cortex-m4
-FPU		= -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+FPU		= -mfpu=fpv4-sp-d16 -mfloat-abi=hard
 
 AFLAGS	= -mthumb ${CPU} ${FPU} -MD
 

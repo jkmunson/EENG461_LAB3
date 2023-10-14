@@ -24,7 +24,6 @@ void ADCPinConfigure(void) {
 
 void ADCSampleSequencerConfigure(void) {
 
-    //while(ADC0_ACTSS_R & (1 << 16)) {}                          //Wait while adc sequencer is busy
     ADC0_ACTSS_R &= ~ADC_ACTSS_ASEN3;                           //Disable Sequencer 3
     ADC0_EMUX_R |= ADC_EMUX_EM3_TIMER;
     ADC0_SSMUX3_R |= 0x8;                                       //Enable AIN8

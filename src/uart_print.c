@@ -9,9 +9,6 @@
 #include <inc/hw_memmap.h>
 #include <common/tm4c123gh6pm.h>
 
-#include "uart_print.h"
-#include "printf.h"
-
 void setup_uart_printer(void){
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
@@ -22,15 +19,69 @@ void setup_uart_printer(void){
                              UART_CONFIG_PAR_NONE));
 	}
 
+void print_decimal(int num){
+	
+	if (num < 0) {
+		ROM_UARTCharPut(UART0_BASE, '-');
+		num = 0 - num;
+	}
+	
+	char buf[24]; //Large enough to fit any value of num
+	
+	int places = 0;
+	
+	do {
+		buf[places++] = 48 + (num % 10);
+		num = num/10;
+	} while (num > 0);
+	
+	for(; places; places--) {
+		ROM_UARTCharPut(UART0_BASE, buf[places-1]);
+	}
+}
 
 void printlf(char format[], ...){
-	char buffer[1024];
 	va_list args;
 	va_start(args, format);
-	snprintf(buffer, 1023, format, args);  // Call the original vprintf with va_list
-	va_end(args);
 	
-	for(int i = 0; buffer[i] != '\0'; i++){
-		ROM_UARTCharPut(UART0_BASE, buffer[i]);
+	char *str;
+	int32_t num;
+	
+	for(int i=0; format[i] != '\0'; i++) {
+		switch(format[i]) {
+			case '%' :
+				i++;
+				switch(format[i]) {
+					case 'd' : //decimal number
+						num = va_arg(args, int32_t);
+						print_decimal(num);
+						
+					break;
+					
+					case '\0': // End of string
+						ROM_UARTCharPut(UART0_BASE, '%');
+						i--; //let the for loop catch this
+					break;
+					
+					case 's': //string
+						str = va_arg(args, char*);
+						for(int j = 0; str[j] != '\0'; j++) {
+							ROM_UARTCharPut(UART0_BASE, str[j]);
+						}
+					break;
+					
+					default: //Not recognized
+					ROM_UARTCharPut(UART0_BASE, '%');
+					ROM_UARTCharPut(UART0_BASE, format[i]);
+					
+					break;
+				}
+			break;
+				
+			default:
+				ROM_UARTCharPut(UART0_BASE, format[i]);
+			break;
+		}
 	}
+	va_end(args);
 }

@@ -254,6 +254,8 @@ ResetISR(void)
     //
     // Call the application's entry point.
     //
+    
+    *((uint32_t *)0xE000ED88) = 0xFFFFFFFF; //SPM376e pg 133 - enable FPU
     main();
 }
 

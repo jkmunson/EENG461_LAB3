@@ -33,7 +33,7 @@ void ADCSampleSequencerConfigure(void) {
     ADC0_IM_R |= ADC_IM_MASK3;                                  //Enable Interrupt
     NVIC_EN0_R |= 1 << (INT_ADC0SS3 - 16);                      //Enable NVIC for ADC0 Sequencer 3
 
-    configureTimer();
+    configureAdcTimer();
 
     ADC0_ACTSS_R |= ADC_ACTSS_ASEN3;                            //Enable Sequencer
 

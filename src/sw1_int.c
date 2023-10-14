@@ -9,9 +9,12 @@
 
 #define MIN_CLOCKS_DEBOUNCE (int32_t)((int32_t)CYCLES_PER_SEC/100)
 
-#define TIMER_ISR_IS_PENDING (TIMER0_MIS_R & TIMER_ICR_TATOCINT)
+#define TIMER_ISR_IS_PENDING (TIMER1_MIS_R & TIMER_ICR_TATOCINT)
+
+bool NEED_PRINT = false;
 
 static void sw1_debounce(void);
+static void sw1_action(void);
 
 void PORTF_int_handler(void){
 	// ASSUMPTION: ONLY SW1 ON PORTF is toggled. 
@@ -46,7 +49,7 @@ static void sw1_debounce(void){
 	//Critical Section: read of the current time
 	__asm("CPSID I\n"); //Disable interrupt handling
 	do {
-		if(TIMER_ISR_IS_PENDING) timerISR();
+		if(TIMER_ISR_IS_PENDING) debounceTimerISR();
 		
 		uptime_now = uptime_seconds;
 		cycles_now = CYCLES_PER_SEC-TIMER0_TAR_R;
@@ -66,11 +69,15 @@ static void sw1_debounce(void){
 		switch(button_state) {
 			case PRESSED:
 				button_state = RELEASED;
-				break;
+			break;
 			
 			case RELEASED:
 				button_state = PRESSED;
-				GPIO_PORTF_DATA_BITS_R[GREEN_LED] ^= GREEN_LED;
+				sw1_action();
 		}
 	}
+}
+
+static void sw1_action(void) {
+	NEED_PRINT = true;
 }

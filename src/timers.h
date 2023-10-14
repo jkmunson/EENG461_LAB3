@@ -13,5 +13,6 @@ extern volatile int32_t uptime_seconds;
 
 void configureTimer (void);
 void timerISR (void);
+void ADCTrigger(void);
 
 #endif //EENG461_LAB_2_TIMERS_H

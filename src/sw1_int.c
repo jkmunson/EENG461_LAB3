@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #include "common/tm4c123gh6pm.h"
-#include "setup.h"
+#include "gpioCode.h"
 #include "timers.h"
 
 #define MIN_CLOCKS_DEBOUNCE (int32_t)((int32_t)CYCLES_PER_SEC/100)

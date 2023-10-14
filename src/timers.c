@@ -1,11 +1,11 @@
 #include <stdint.h>
 #include "timers.h"
 #include "main.h"
-#include "setup.h"
+#include "gpioCode.h"
 #include "common/tm4c123gh6pm.h"
 
-volatile int32_t uptime_seconds;
 volatile int sec_count;
+volatile int32_t uptime_seconds;
 
 void configureTimer (void) {
 
@@ -16,11 +16,11 @@ void configureTimer (void) {
     TIMER0_CTL_R &= ~TIMER_CTL_TAEN; //Disable Timer
     TIMER0_CFG_R = TIMER_CFG_32_BIT_TIMER;
     TIMER0_TAMR_R |= TIMER_TAMR_TAMR_PERIOD; //Set Timer to count down periodically
-    TIMER0_TAILR_R = CYCLES_PER_SEC - 1;
-    TIMER0_TAPR_R = 0;
-    TIMER0_ICR_R |= TIMER_ICR_TATOCINT; //Clear Interrupt
-    TIMER0_IMR_R |= TIMER_IMR_TATOIM; //Enable Interrupt as Timeout
-    NVIC_EN0_R = 1 << (INT_TIMER0A - 16);
+    TIMER0_TAILR_R = 16000 - 1;
+    TIMER0_CTL_R |= TIMER_CTL_TAOTE; //Set as an ADC Trigger
+//    TIMER0_ICR_R |= TIMER_ICR_TATOCINT; //Clear Interrupt
+//    TIMER0_IMR_R |= TIMER_IMR_TATOIM; //Enable Interrupt as Timeout
+//    NVIC_EN0_R = 1 << (INT_TIMER0A - 16);
     TIMER0_CTL_R |= TIMER_CTL_TAEN; //Enable Timer
 }
 
@@ -35,6 +35,6 @@ void timerISR (void) {
         sec_count = 0;
     }
 	uptime_seconds++;
-	
+
     TIMER0_IMR_R |= TIMER_IMR_TATOIM; //Enable Interrupt
 }

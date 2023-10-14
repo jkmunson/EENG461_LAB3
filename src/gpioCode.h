@@ -5,4 +5,6 @@
 #define RGB_PINS GREEN_LED | BLUE_LED | RED_LED
 #define SW1_PIN (1 << 4)
 
-void setup(void);
+#define GPIO_PIN5 (1 << 5)
+
+void GPIOConfigure(void);

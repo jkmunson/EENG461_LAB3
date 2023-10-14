@@ -6,6 +6,7 @@
 #include "inc/hw_nvic.h"
 #include "inc/hw_types.h"
 #include "sw1_int.h"
+#include "adc.h"
 #include "timers.h"
 #include "string.h"
 
@@ -76,9 +77,9 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 0
     IntDefaultHandler,                      // ADC Sequence 1
     IntDefaultHandler,                      // ADC Sequence 2
-    IntDefaultHandler,                      // ADC Sequence 3
+    saveADCSample,                          // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
-    timerISR,                               // Timer 0 subtimer A
+    IntDefaultHandler,                      // Timer 0 subtimer A
     IntDefaultHandler,                      // Timer 0 subtimer B
     IntDefaultHandler,                      // Timer 1 subtimer A
     IntDefaultHandler,                      // Timer 1 subtimer B

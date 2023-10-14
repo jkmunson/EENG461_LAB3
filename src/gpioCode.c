@@ -1,10 +1,10 @@
 #include "common/tm4c123gh6pm.h"
-#include "setup.h"
+#include "gpioCode.h"
 #include <stdint.h>
 
-void setup(void) {
+void GPIOConfigure(void) {
 	// Enable GPIO clock
-	SYSCTL_RCGCGPIO_R |= (1 << 5);
+	SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R5;
 	while(!(SYSCTL_PRGPIO_R & SYSCTL_PRGPIO_R5)) {};
 	
 	// Configure pins
@@ -29,11 +29,4 @@ void setup(void) {
 	NVIC_PRI7_R = (NVIC_PRI7_R & ~NVIC_PRI7_INT30_M) | (0x7 << NVIC_PRI7_INT30_S); //Set the PORTF interrupt to the lowest priority.
 	
 	NVIC_EN0_R |= (1 << 30); 	 // Enable Port F interrupts in nvic
-}
-
-void configureADC (void) {
-    // Enable ADC Clock
-    SYSCTL_RCGCADC_R |= (1 << 0);
-    while(!(SYSCTL_PRADC_R0))
-
 }

@@ -1,0 +1,363 @@
+
+Discarded input sections
+
+ .text          0x00000000        0x0 objs/src/adc.o
+ .data          0x00000000        0x0 objs/src/adc.o
+ .bss           0x00000000        0x0 objs/src/adc.o
+ .text          0x00000000        0x0 objs/src/gpioCode.o
+ .data          0x00000000        0x0 objs/src/gpioCode.o
+ .bss           0x00000000        0x0 objs/src/gpioCode.o
+ .text          0x00000000        0x0 objs/src/main.o
+ .data          0x00000000        0x0 objs/src/main.o
+ .bss           0x00000000        0x0 objs/src/main.o
+ .text.Disable_Interrupts
+                0x00000000        0x4 objs/src/main.o
+ .text          0x00000000        0x0 objs/src/printf.o
+ .data          0x00000000        0x0 objs/src/printf.o
+ .bss           0x00000000        0x0 objs/src/printf.o
+ .text._out_fct
+                0x00000000        0xe objs/src/printf.o
+ .text._out_char
+                0x00000000        0xc objs/src/printf.o
+ .text.printf_  0x00000000       0x2c objs/src/printf.o
+ .text.sprintf_
+                0x00000000       0x2c objs/src/printf.o
+ .text.vprintf_
+                0x00000000       0x20 objs/src/printf.o
+ .text.vsnprintf_
+                0x00000000       0x1c objs/src/printf.o
+ .text.fctprintf
+                0x00000000       0x30 objs/src/printf.o
+ .text          0x00000000        0x0 objs/src/pwmCode.o
+ .data          0x00000000        0x0 objs/src/pwmCode.o
+ .bss           0x00000000        0x0 objs/src/pwmCode.o
+ .text.PWMSetPeriod
+                0x00000000       0x18 objs/src/pwmCode.o
+ .text          0x00000000        0x0 objs/src/sw1_int.o
+ .data          0x00000000        0x0 objs/src/sw1_int.o
+ .bss           0x00000000        0x0 objs/src/sw1_int.o
+ .text          0x00000000        0x0 objs/src/timers.o
+ .data          0x00000000        0x0 objs/src/timers.o
+ .bss           0x00000000        0x0 objs/src/timers.o
+ .text          0x00000000        0x0 objs/src/uart_print.o
+ .data          0x00000000        0x0 objs/src/uart_print.o
+ .bss           0x00000000        0x0 objs/src/uart_print.o
+ .text          0x00000000        0x0 objs/sys/startup_gcc.o
+ .data          0x00000000        0x0 objs/sys/startup_gcc.o
+ .bss           0x00000000        0x0 objs/sys/startup_gcc.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x00000000         0x00040000         xr
+SRAM             0x20000000         0x00008000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD objs/src/adc.o
+LOAD objs/src/gpioCode.o
+LOAD objs/src/main.o
+LOAD objs/src/printf.o
+LOAD objs/src/pwmCode.o
+LOAD objs/src/sw1_int.o
+LOAD objs/src/timers.o
+LOAD objs/src/uart_print.o
+LOAD objs/sys/startup_gcc.o
+
+.text           0x00000000     0x12d9
+                0x00000000                        _text = .
+ *(.isr_vector)
+ .isr_vector    0x00000000      0x26c objs/sys/startup_gcc.o
+                0x00000000                g_pfnVectors
+ *(.text*)
+ .text.ADCPinConfigure
+                0x0000026c       0x64 objs/src/adc.o
+                0x0000026c                ADCPinConfigure
+ .text.ADCSampleSequencerConfigure
+                0x000002d0       0x64 objs/src/adc.o
+                0x000002d0                ADCSampleSequencerConfigure
+ .text.saveADCSample
+                0x00000334       0x30 objs/src/adc.o
+                0x00000334                saveADCSample
+ .text.GPIOConfigure
+                0x00000364       0xb0 objs/src/gpioCode.o
+                0x00000364                GPIOConfigure
+ .text.Enable_Interrupts
+                0x00000414        0x4 objs/src/main.o
+                0x00000414                Enable_Interrupts
+ .text.main     0x00000418       0x78 objs/src/main.o
+                0x00000418                main
+ .text._out_buffer
+                0x00000490        0x8 objs/src/printf.o
+ .text._out_null
+                0x00000498        0x2 objs/src/printf.o
+ .text._atoi    0x0000049a       0x26 objs/src/printf.o
+ .text._out_rev
+                0x000004c0       0x7e objs/src/printf.o
+ .text._ntoa_format
+                0x0000053e      0x136 objs/src/printf.o
+ .text._ntoa_long
+                0x00000674       0x94 objs/src/printf.o
+ .text._ntoa_long_long
+                0x00000708       0xc2 objs/src/printf.o
+ *fill*         0x000007ca        0x2 
+ .text._vsnprintf
+                0x000007cc      0x6c4 objs/src/printf.o
+ .text.snprintf_
+                0x00000e90       0x28 objs/src/printf.o
+                0x00000e90                snprintf_
+ .text.PWMEnable
+                0x00000eb8       0x1c objs/src/pwmCode.o
+                0x00000eb8                PWMEnable
+ .text.PWMConfigure
+                0x00000ed4       0x88 objs/src/pwmCode.o
+                0x00000ed4                PWMConfigure
+ .text.PWMDisable
+                0x00000f5c       0x1c objs/src/pwmCode.o
+                0x00000f5c                PWMDisable
+ .text.PWMSetDutyCycle
+                0x00000f78       0x20 objs/src/pwmCode.o
+                0x00000f78                PWMSetDutyCycle
+ .text.sw1_action
+                0x00000f98        0xc objs/src/sw1_int.o
+ .text.sw1_debounce
+                0x00000fa4       0xb4 objs/src/sw1_int.o
+ .text.PORTF_int_handler
+                0x00001058       0x40 objs/src/sw1_int.o
+                0x00001058                PORTF_int_handler
+ .text.configureAdcTimer
+                0x00001098       0x58 objs/src/timers.o
+                0x00001098                configureAdcTimer
+ .text.configureDebounceTimer
+                0x000010f0       0x70 objs/src/timers.o
+                0x000010f0                configureDebounceTimer
+ .text.debounceTimerISR
+                0x00001160       0x2c objs/src/timers.o
+                0x00001160                debounceTimerISR
+ .text.setup_uart_printer
+                0x0000118c       0x5c objs/src/uart_print.o
+                0x0000118c                setup_uart_printer
+ .text.printlf  0x000011e8       0x48 objs/src/uart_print.o
+                0x000011e8                printlf
+ .text.NmiSR    0x00001230        0x2 objs/sys/startup_gcc.o
+ .text.FaultISR
+                0x00001232        0x2 objs/sys/startup_gcc.o
+ .text.IntDefaultHandler
+                0x00001234        0x2 objs/sys/startup_gcc.o
+ *fill*         0x00001236        0x2 
+ .text.ResetISR
+                0x00001238       0x44 objs/sys/startup_gcc.o
+                0x00001238                ResetISR
+ *(.rodata*)
+ .rodata.main.str1.4
+                0x0000127c       0x5d objs/src/main.o
+                0x000012d9                        _etext = .
+
+.glue_7         0x000012dc        0x0
+ .glue_7        0x000012dc        0x0 linker stubs
+
+.glue_7t        0x000012dc        0x0
+ .glue_7t       0x000012dc        0x0 linker stubs
+
+.vfp11_veneer   0x000012dc        0x0
+ .vfp11_veneer  0x000012dc        0x0 linker stubs
+
+.v4_bx          0x000012dc        0x0
+ .v4_bx         0x000012dc        0x0 linker stubs
+
+.iplt           0x000012dc        0x0
+ .iplt          0x000012dc        0x0 objs/src/adc.o
+
+.rel.dyn        0x000012dc        0x0
+ .rel.iplt      0x000012dc        0x0 objs/src/adc.o
+
+.data           0x20000000        0x0 load address 0x000012d9
+                0x20000000                        _data = .
+ *(vtable)
+ *(.data*)
+                0x20000000                        _edata = .
+
+.igot.plt       0x20000000        0x0
+ .igot.plt      0x20000000        0x0 objs/src/adc.o
+
+.bss            0x20000000      0x114
+                0x20000000                        _bss = .
+ *(.bss*)
+ .bss.potReading
+                0x20000000        0x2 objs/src/adc.o
+                0x20000000                potReading
+ *fill*         0x20000002        0x2 
+ .bss.cycles_last.0
+                0x20000004        0x4 objs/src/sw1_int.o
+ .bss.uptime_last.1
+                0x20000008        0x4 objs/src/sw1_int.o
+ .bss.button_state.2
+                0x2000000c        0x1 objs/src/sw1_int.o
+ .bss.NEED_PRINT
+                0x2000000d        0x1 objs/src/sw1_int.o
+                0x2000000d                NEED_PRINT
+ *fill*         0x2000000e        0x2 
+ .bss.uptime_seconds
+                0x20000010        0x4 objs/src/timers.o
+                0x20000010                uptime_seconds
+ .bss.pulStack  0x20000014      0x100 objs/sys/startup_gcc.o
+ *(COMMON)
+                0x20000114                        _ebss = .
+LOAD /usr/lib/arm-none-eabi/newlib/libc.a
+LOAD /usr/lib/arm-none-eabi/newlib/libm.a
+OUTPUT(objs/lab3binary.axf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x00000000     0x1ce0
+ .debug_info    0x00000000       0xe8 objs/src/adc.o
+ .debug_info    0x000000e8       0x8b objs/src/gpioCode.o
+ .debug_info    0x00000173      0x1f7 objs/src/main.o
+ .debug_info    0x0000036a     0x11db objs/src/printf.o
+ .debug_info    0x00001545      0x13e objs/src/pwmCode.o
+ .debug_info    0x00001683      0x1d3 objs/src/sw1_int.o
+ .debug_info    0x00001856       0xd2 objs/src/timers.o
+ .debug_info    0x00001928      0x225 objs/src/uart_print.o
+ .debug_info    0x00001b4d      0x193 objs/sys/startup_gcc.o
+
+.debug_abbrev   0x00000000      0xa15
+ .debug_abbrev  0x00000000       0xb6 objs/src/adc.o
+ .debug_abbrev  0x000000b6       0x52 objs/src/gpioCode.o
+ .debug_abbrev  0x00000108      0x102 objs/src/main.o
+ .debug_abbrev  0x0000020a      0x37f objs/src/printf.o
+ .debug_abbrev  0x00000589       0xa9 objs/src/pwmCode.o
+ .debug_abbrev  0x00000632      0x119 objs/src/sw1_int.o
+ .debug_abbrev  0x0000074b       0x7e objs/src/timers.o
+ .debug_abbrev  0x000007c9      0x144 objs/src/uart_print.o
+ .debug_abbrev  0x0000090d      0x108 objs/sys/startup_gcc.o
+
+.debug_aranges  0x00000000      0x218
+ .debug_aranges
+                0x00000000       0x30 objs/src/adc.o
+ .debug_aranges
+                0x00000030       0x20 objs/src/gpioCode.o
+ .debug_aranges
+                0x00000050       0x30 objs/src/main.o
+ .debug_aranges
+                0x00000080       0x98 objs/src/printf.o
+ .debug_aranges
+                0x00000118       0x40 objs/src/pwmCode.o
+ .debug_aranges
+                0x00000158       0x30 objs/src/sw1_int.o
+ .debug_aranges
+                0x00000188       0x30 objs/src/timers.o
+ .debug_aranges
+                0x000001b8       0x28 objs/src/uart_print.o
+ .debug_aranges
+                0x000001e0       0x38 objs/sys/startup_gcc.o
+
+.debug_rnglists
+                0x00000000      0x1d8
+ .debug_rnglists
+                0x00000000       0x1f objs/src/adc.o
+ .debug_rnglists
+                0x0000001f       0x14 objs/src/gpioCode.o
+ .debug_rnglists
+                0x00000033       0x2b objs/src/main.o
+ .debug_rnglists
+                0x0000005e       0xd1 objs/src/printf.o
+ .debug_rnglists
+                0x0000012f       0x2c objs/src/pwmCode.o
+ .debug_rnglists
+                0x0000015b       0x20 objs/src/sw1_int.o
+ .debug_rnglists
+                0x0000017b       0x1f objs/src/timers.o
+ .debug_rnglists
+                0x0000019a       0x19 objs/src/uart_print.o
+ .debug_rnglists
+                0x000001b3       0x25 objs/sys/startup_gcc.o
+
+.debug_line     0x00000000     0x175b
+ .debug_line    0x00000000      0x1bd objs/src/adc.o
+ .debug_line    0x000001bd      0x168 objs/src/gpioCode.o
+ .debug_line    0x00000325      0x139 objs/src/main.o
+ .debug_line    0x0000045e      0xbde objs/src/printf.o
+ .debug_line    0x0000103c      0x195 objs/src/pwmCode.o
+ .debug_line    0x000011d1      0x1a2 objs/src/sw1_int.o
+ .debug_line    0x00001373      0x1a0 objs/src/timers.o
+ .debug_line    0x00001513      0x143 objs/src/uart_print.o
+ .debug_line    0x00001656      0x105 objs/sys/startup_gcc.o
+
+.debug_str      0x00000000      0x5a9
+ .debug_str     0x00000000      0x188 objs/src/adc.o
+                                0x1bc (size before relaxing)
+ .debug_str     0x00000188       0x1d objs/src/gpioCode.o
+                                0x16f (size before relaxing)
+ .debug_str     0x000001a5       0xc2 objs/src/main.o
+                                0x266 (size before relaxing)
+ .debug_str     0x00000267      0x193 objs/src/printf.o
+                                0x315 (size before relaxing)
+ .debug_str     0x000003fa       0x4d objs/src/pwmCode.o
+                                0x1cd (size before relaxing)
+ .debug_str     0x00000447       0xca objs/src/sw1_int.o
+                                0x245 (size before relaxing)
+ .debug_str     0x00000511        0xd objs/src/timers.o
+                                0x1b0 (size before relaxing)
+ .debug_str     0x0000051e       0x16 objs/src/uart_print.o
+                                0x1d9 (size before relaxing)
+ .debug_str     0x00000534       0x75 objs/sys/startup_gcc.o
+                                0x20b (size before relaxing)
+
+.comment        0x00000000       0x26
+ .comment       0x00000000       0x26 objs/src/adc.o
+                                 0x27 (size before relaxing)
+ .comment       0x00000026       0x27 objs/src/gpioCode.o
+ .comment       0x00000026       0x27 objs/src/main.o
+ .comment       0x00000026       0x27 objs/src/printf.o
+ .comment       0x00000026       0x27 objs/src/pwmCode.o
+ .comment       0x00000026       0x27 objs/src/sw1_int.o
+ .comment       0x00000026       0x27 objs/src/timers.o
+ .comment       0x00000026       0x27 objs/src/uart_print.o
+ .comment       0x00000026       0x27 objs/sys/startup_gcc.o
+
+.ARM.attributes
+                0x00000000       0x2e
+ .ARM.attributes
+                0x00000000       0x2e objs/src/adc.o
+ .ARM.attributes
+                0x0000002e       0x2e objs/src/gpioCode.o
+ .ARM.attributes
+                0x0000005c       0x2e objs/src/main.o
+ .ARM.attributes
+                0x0000008a       0x2e objs/src/printf.o
+ .ARM.attributes
+                0x000000b8       0x2e objs/src/pwmCode.o
+ .ARM.attributes
+                0x000000e6       0x2e objs/src/sw1_int.o
+ .ARM.attributes
+                0x00000114       0x2e objs/src/timers.o
+ .ARM.attributes
+                0x00000142       0x2e objs/src/uart_print.o
+ .ARM.attributes
+                0x00000170       0x2e objs/sys/startup_gcc.o
+
+.debug_frame    0x00000000      0x4cc
+ .debug_frame   0x00000000       0x48 objs/src/adc.o
+ .debug_frame   0x00000048       0x20 objs/src/gpioCode.o
+ .debug_frame   0x00000068       0x4c objs/src/main.o
+ .debug_frame   0x000000b4      0x248 objs/src/printf.o
+ .debug_frame   0x000002fc       0x78 objs/src/pwmCode.o
+ .debug_frame   0x00000374       0x5c objs/src/sw1_int.o
+ .debug_frame   0x000003d0       0x40 objs/src/timers.o
+ .debug_frame   0x00000410       0x64 objs/src/uart_print.o
+ .debug_frame   0x00000474       0x58 objs/sys/startup_gcc.o
+
+.debug_loclists
+                0x00000000      0xf0c
+ .debug_loclists
+                0x00000000       0x76 objs/src/main.o
+ .debug_loclists
+                0x00000076      0xd7f objs/src/printf.o
+ .debug_loclists
+                0x00000df5       0x3a objs/src/pwmCode.o
+ .debug_loclists
+                0x00000e2f       0x76 objs/src/sw1_int.o
+ .debug_loclists
+                0x00000ea5       0x21 objs/src/uart_print.o
+ .debug_loclists
+                0x00000ec6       0x46 objs/sys/startup_gcc.o

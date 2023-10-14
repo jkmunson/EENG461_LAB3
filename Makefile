@@ -7,16 +7,16 @@ OBJSIZE	= arm-none-eabi-size
 OBJDUMP	= arm-none-eabi-objdump
 OBJCOPY	= arm-none-eabi-objcopy
 CPU		= -mcpu=cortex-m4
-FPU		= -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+FPU		= -mfpu=fpv4-sp-d16 -mfloat-abi=soft
 
 AFLAGS	= -mthumb ${CPU} ${FPU} -MD
 
-CFLAGS	= -mthumb ${CPU} ${FPU} -Og -ffunction-sections -fno-builtin -fdata-sections -MD -std=c17 -Wall -Wextra -pedantic -c -Dgcc -g -I driver -I src -I sys 
+CFLAGS	= -mthumb ${CPU} ${FPU} -Og -ffunction-sections  -fdata-sections -MD -std=c17 -Wall -Wextra -pedantic -c -Dgcc -g -I driver -I src -I sys 
+#-fno-builtin
 
 CFLAGS	+= -DPART_TM4C123GH6PM -DTARGET_IS_BLIZZARD_RA1
 
-LDFLAGS=--gc-sections 
-#-L /usr/lib/arm-none-eabi/newlib -lc
+LDFLAGS=--gc-sections -L /usr/lib/arm-none-eabi/newlib -lc -lm
 
 AFLAGS+=${patsubst %,-I%,${subst :, ,${IPATH}}}
 CFLAGS+=${patsubst %,-I%,${subst :, ,${IPATH}}}

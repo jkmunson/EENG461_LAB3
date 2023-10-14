@@ -1,18 +1,11 @@
-//
-// Created by Mark Clark on 10/3/23.
-//
+#pragma once
 #include "stdint.h"
 
-#ifndef EENG461_LAB_2_TIMERS_H
-#define EENG461_LAB_2_TIMERS_H
-
-extern volatile int sec_count;
 extern volatile int32_t uptime_seconds;
 
 #define CYCLES_PER_SEC 16000000
 
-void configureTimer (void);
-void timerISR (void);
+void configureAdcTimer (void);
+void configureDebounceTimer(void);
+void debounceTimerISR (void);
 void ADCTrigger(void);
-
-#endif //EENG461_LAB_2_TIMERS_H

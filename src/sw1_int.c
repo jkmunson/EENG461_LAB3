@@ -6,6 +6,7 @@
 #include "common/tm4c123gh6pm.h"
 #include "gpioCode.h"
 #include "timers.h"
+#include "uart_print.h"
 
 #define MIN_CLOCKS_DEBOUNCE (int32_t)((int32_t)CYCLES_PER_SEC/100)
 
@@ -52,7 +53,7 @@ static void sw1_debounce(void){
 		if(TIMER_ISR_IS_PENDING) debounceTimerISR();
 		
 		uptime_now = uptime_seconds;
-		cycles_now = CYCLES_PER_SEC-TIMER0_TAR_R;
+		cycles_now = CYCLES_PER_SEC-TIMER1_TAR_R;
 		
 	// If the counter overflowed during this code block, then our reads of uptime and cycles are invalid. Re-do them.
 	} while (TIMER_ISR_IS_PENDING); 
@@ -61,7 +62,6 @@ static void sw1_debounce(void){
 	int32_t seconds_passed = (uptime_now - uptime_last);
 	if(seconds_passed > 2) seconds_passed = 2; // Prevent overflow
 	int32_t cycles_passed  = (cycles_now - cycles_last) + seconds_passed*CYCLES_PER_SEC;
-
 	if(cycles_passed > MIN_CLOCKS_DEBOUNCE) {
 		uptime_last = uptime_now;
 		cycles_last = cycles_now;
@@ -75,7 +75,7 @@ static void sw1_debounce(void){
 				button_state = PRESSED;
 				sw1_action();
 		}
-	}
+	} 
 }
 
 static void sw1_action(void) {

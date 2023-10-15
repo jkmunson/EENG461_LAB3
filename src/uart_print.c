@@ -10,11 +10,12 @@
 #include <common/tm4c123gh6pm.h>
 
 void setup_uart_printer(void){
+	ROM_SysCtlClockSet(SYSCTL_SYSDIV_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 	while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_UART0)){};
 	ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, 3);
-	ROM_UARTConfigSetExpClk(UART0_BASE, ROM_SysCtlClockGet(), 115200,
+	ROM_UARTConfigSetExpClk(UART0_BASE, ROM_SysCtlClockGet(), 921600,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
 	}
@@ -31,7 +32,7 @@ void print_decimal(int num){
 	int places = 0;
 	
 	do {
-		buf[places++] = 48 + (num % 10);
+		buf[places++] = (char)(48 + (num % 10));
 		num = num/10;
 	} while (num > 0);
 	
@@ -47,7 +48,12 @@ void printlf(char format[], ...){
 	char *str;
 	int32_t num;
 	
+	
+	while(ROM_UARTBusy(UART0_BASE)){};
+	
+	ROM_IntMasterDisable();
 	for(int i=0; format[i] != '\0'; i++) {
+		while(!ROM_UARTSpaceAvail(UART0_BASE)) {};
 		switch(format[i]) {
 			case '%' :
 				i++;
@@ -83,5 +89,8 @@ void printlf(char format[], ...){
 			break;
 		}
 	}
+	
+	while(ROM_UARTBusy(UART0_BASE)){};
+	ROM_IntMasterEnable();
 	va_end(args);
 }

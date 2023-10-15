@@ -14,12 +14,12 @@ char* float_to_string(float number) {
     int integerPart = (int)number;
     int decimalPart = (int)((number - integerPart) * 100);
 
-    buffer[0] = '0' + (integerPart / 10);
-    buffer[1] = '0' + (integerPart % 10);
+    buffer[0] = (char)('0' + (integerPart / 10));
+    buffer[1] = (char)('0' + (integerPart % 10));
     buffer[2] = '.';
-    buffer[3] = '0' + (decimalPart / 10);
-    buffer[4] = '0' + (decimalPart % 10);
-    buffer[5] = '\0';
+    buffer[3] = (char)('0' + (decimalPart / 10));
+    buffer[4] = (char)('0' + (decimalPart % 10));
+    buffer[5] = (char)('\0');
 
     return buffer;
 }
@@ -48,17 +48,11 @@ int main (void) {
 		}
 		
 		if(NEED_PRINT) {
-			printlf("The current ADC value is %d and the DC is %s\n", potReading, float_to_string((float)potReading/(float)4095.0f*3.3f));
+			printlf("The current ADC value is %d and the DC is %s \n", potReading, float_to_string((float)potReading/(float)4095.0f*3.3f));
 			NEED_PRINT = false;
 		}
 		
-		/*
-		if(uptime_seconds - uptime_last > 4) {
-			count++;
-			printlf("%d: Hello! This is the %d time I've tried to reach you about your car's extended warranty!\r\n", uptime_seconds, count);
-			NEED_PRINT = true;
-			uptime_last = uptime_seconds;
-		} */
+		printlf("THIS IS VERY LONG SPAM - THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG - the quick brown fox jumped over the lazy dog\n");
 	}
 
 	return (0);

@@ -1,6 +1,7 @@
 #include "timers.h"
 #include "main.h"
 #include "common/tm4c123gh6pm.h"
+#include "uart_print.h"
 
 volatile int32_t uptime_seconds;
 
@@ -43,6 +44,6 @@ void debounceTimerISR (void) {
     TIMER1_ICR_R |= TIMER_ICR_TATOCINT; //Clear Interrupt
 
 	uptime_seconds++;
-	
+
     TIMER1_IMR_R |= TIMER_IMR_TATOIM; //Enable Interrupt
 }

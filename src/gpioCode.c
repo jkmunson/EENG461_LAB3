@@ -26,7 +26,7 @@ void GPIOConfigure(void) {
 	GPIO_PORTF_IBE_R |= SW1_PIN; //Both Edges
 	GPIO_PORTF_IM_R |= SW1_PIN;  //Unmask the pin
 	
-	NVIC_PRI7_R = (NVIC_PRI7_R & ~NVIC_PRI7_INT30_M) | (0x7 << NVIC_PRI7_INT30_S); //Set the PORTF interrupt to the lowest priority.
+	//NVIC_PRI7_R = (NVIC_PRI7_R & ~NVIC_PRI7_INT30_M) | (0x7 << NVIC_PRI7_INT30_S); //Set the PORTF interrupt to the lowest priority.
 	
 	NVIC_EN0_R |= (1 << 30); 	 // Enable Port F interrupts in nvic
 }

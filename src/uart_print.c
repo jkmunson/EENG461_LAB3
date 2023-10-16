@@ -90,10 +90,7 @@ void print_float(float number) {
 	
 	buf[places++] = '.';
 	
-	do {
-		buf[places++] = (char)('0' + integerPart % 10);
-		integerPart /= 10;
-	} while (integerPart > 0);
+	print_unsigned_decimal(integerPart);
 	
 	for(; places; places--) {
 		ROM_UARTCharPut(UART0_BASE, buf[places-1]);
@@ -108,8 +105,6 @@ void printlf(char format[], ...) {
 	int32_t num;
 	uint32_t numu;
 	float *numf;
-	
-	//while(ROM_UARTBusy(UART0_BASE)){};
 	
 	for(int i=0; format[i] != '\0'; i++) {
 		switch(format[i]) {

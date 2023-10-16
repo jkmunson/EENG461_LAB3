@@ -25,7 +25,7 @@ void ADCPinConfigure(void) {
 void ADCSampleSequencerConfigure(void) {
 
     ADC0_ACTSS_R &= ~ADC_ACTSS_ASEN3;                           //Disable Sequencer 3
-    ADC0_EMUX_R |= ADC_EMUX_EM3_TIMER;
+    ADC0_EMUX_R |= ADC_EMUX_EM3_TIMER;                          //Set ADC as Timer Triggered
     ADC0_SSMUX3_R |= 0x8;                                       //Enable AIN8
     ADC0_SSCTL3_R |= ADC_SSCTL3_IE0 | ADC_SSCTL3_END0;          //Sequencer control
     ADC0_SAC_R = 0x6;                                           //Enables x64 Oversampling

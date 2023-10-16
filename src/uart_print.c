@@ -17,7 +17,7 @@ void setup_uart_printer(void){
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 	while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_UART0)){};
 	ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, 3);
-	ROM_UARTConfigSetExpClk(UART0_BASE, ROM_SysCtlClockGet(), 921600,
+	ROM_UARTConfigSetExpClk(UART0_BASE, ROM_SysCtlClockGet(), 115200,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
 }

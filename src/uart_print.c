@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <driverlib/rom.h>
 #include <driverlib/uart.h>
+#include <driverlib/gpio.h>
 #include <driverlib/sysctl.h>
 #include <inc/hw_uart.h>
 #include <inc/hw_sysctl.h>
@@ -16,15 +17,30 @@ void setup_uart_printer(void){
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 	while(!ROM_SysCtlPeripheralReady(SYSCTL_PERIPH_UART0)){};
-	ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, 3);
-	ROM_UARTConfigSetExpClk(UART0_BASE, ROM_SysCtlClockGet(), 115200,
-                            (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-                             UART_CONFIG_PAR_NONE));
+	
+	ROM_GPIOPadConfigSet(GPIO_PORTA_BASE, 3, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD);
+	ROM_GPIODirModeSet(GPIO_PORTA_BASE, 3, GPIO_DIR_MODE_HW);
+	ROM_UARTConfigSetExpClk(UART0_BASE, ROM_SysCtlClockGet(), 921600,
+                            (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_TWO | UART_CONFIG_PAR_NONE));
+}
+
+void putchar(char c) {
+	static int chars_sent_recently = 0;
+	ROM_UARTCharPut(UART0_BASE, c);
+	while(ROM_UARTBusy(UART0_BASE)) {};
+	
+	//Really dumb, but avoid overwhelming ICDI
+	if(++chars_sent_recently > 7) {
+		chars_sent_recently = 0;
+		for(int i = 0; i < 150; i++) {
+			__asm("mov r1,r1\n");
+		}
+	}
 }
 
 void print_string(const char * const str) {
 	for(int i = 0; str[i] != '\0'; i++) {
-		ROM_UARTCharPut(UART0_BASE, str[i]);
+		putchar( str[i]);
 	}
 }
 
@@ -40,14 +56,14 @@ void print_unsigned_decimal(uint32_t num){
 	} while (num > 0);
 	
 	for(; places; places--) {
-		ROM_UARTCharPut(UART0_BASE, buf[places-1]);
+		putchar( buf[places-1]);
 	}
 }
 
 void print_decimal(int32_t num){
 	
 	if (num < 0) {
-		ROM_UARTCharPut(UART0_BASE, '-');
+		putchar( '-');
 		num = 0 - num;
 	}
 	
@@ -74,7 +90,7 @@ void print_float(float number) {
 	char buf[15]; // large enough to fit any value
 	
 	if(number < 0) {
-		ROM_UARTCharPut(UART0_BASE, '-');
+		putchar( '-');
 		number = 0 - number;
 	}
 	
@@ -93,7 +109,7 @@ void print_float(float number) {
 	print_unsigned_decimal(integerPart);
 	
 	for(; places; places--) {
-		ROM_UARTCharPut(UART0_BASE, buf[places-1]);
+		putchar( buf[places-1]);
 	}
 }
 
@@ -122,7 +138,7 @@ void printlf(char format[], ...) {
 					break;
 					
 					case '\0': // End of string
-						ROM_UARTCharPut(UART0_BASE, '%');
+						putchar( '%');
 						i--; //let the for loop catch this
 					break;
 					
@@ -137,14 +153,14 @@ void printlf(char format[], ...) {
 					break;
 					
 					default: //Not recognized
-					ROM_UARTCharPut(UART0_BASE, '%');
-					ROM_UARTCharPut(UART0_BASE, format[i]);
+					putchar( '%');
+					putchar( format[i]);
 					break;
 				}
 			break;
 				
 			default:
-				ROM_UARTCharPut(UART0_BASE, format[i]);
+				putchar( format[i]);
 			break;
 		}
 	}
